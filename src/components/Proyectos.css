@@ -1,15 +1,16 @@
-.bloques-container {
+/* src/components/Proyectos.css */
+
+.proyectos-container {
     padding: 20px;
 }
 
-.bloques-grid {
+.proyectos-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
-/* src/components/BloquesDeTrabajo.css */
-.bloque {
+.proyecto {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -18,31 +19,27 @@
     transition: transform 0.3s, background-color 0.3s;
 }
 
-.bloque:hover {
+.proyecto:hover {
     transform: scale(1.05);
 }
 
-/* Estado por defecto */
-.bloque.original {
+.proyecto.original {
     background-color: #f9f9f9;
     color: #333;
 }
 
-/* Estado cumplido */
-.bloque.completado {
+.proyecto.completado {
     background-color: #4caf50;
     color: white;
 }
 
-/* Estado fallido */
-.bloque.fallido {
-    background-color: #000;
+.proyecto.en-curso {
+    background-color: #c480f7;
     color: white;
 }
 
-/* Estado en curso */
-.bloque.en-curso {
-    background-color: #c480f7;
+.proyecto.fallido {
+    background-color: #000;
     color: white;
 }
 
@@ -58,11 +55,12 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow-y: auto; /* Permite scroll si el contenido es más grande */
 }
 
 .modal-content {
     background-color: #ffffff;
-    padding: 30px;
+    padding: 20px;
     border-radius: 12px;
     width: 90%;
     max-width: 500px;
@@ -83,7 +81,7 @@
 
 .modal-content input[type="text"],
 .modal-content textarea {
-    width: 100%;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
     padding: 10px 15px;
     font-size: 1em;
     border: 1px solid #ddd;
@@ -91,6 +89,7 @@
     margin-bottom: 15px;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s;
+    box-sizing: border-box; /* Asegura que padding no desborde */
 }
 
 .modal-content input[type="text"]:focus,
@@ -101,12 +100,12 @@
 
 .modal-content textarea {
     resize: none;
-    height: 100px;
+    height: 80px; /* Ajusta la altura */
 }
 
 .estado-options {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 10px;
     margin-bottom: 20px;
 }
@@ -123,6 +122,7 @@
     font-size: 0.9em;
     font-weight: bold;
     color: #555;
+    white-space: nowrap; /* Evita que el texto se corte o haga salto de línea */
 }
 
 .estado-options input {

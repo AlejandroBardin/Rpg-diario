@@ -1,145 +1,167 @@
 // src/components/Contador.jsx
-import React, { useState, useEffect } from 'react';
-import './Contador.css';
-import Calendario from './Calendario';
-import Objetivos from './Objetivos';
-import BloquesDeTrabajo from './BloquesDeTrabajo'; // Importa el nuevo componente
-import PersonajeNivel1 from '../assets/personaje-nivel1.png';
-import PersonajeNivel2 from '../assets/personaje-nivel2.png';
-import PersonajeNivel3 from '../assets/personaje-nivel3.png';
+import React, { useState, useEffect, useRef } from "react";
+import "./Contador.css";
+import Calendario from "./Calendario";
+import Objetivos from "./Objetivos";
+import BloquesDeTrabajo from "./BloquesDeTrabajo";
+import Proyectos from "./Proyectos";
+import PersonajeNivel1 from "../assets/personaje-nivel1.png";
+import PersonajeNivel2 from "../assets/personaje-nivel2.png";
+import PersonajeNivel3 from "../assets/personaje-nivel3.png";
+import lvlSound from "../assets/lvl.mp3";
 
 function Contador({ onPointsIncrease }) {
-    const [puntos, setPuntos] = useState(0);
-    const [vasosAgua, setVasosAgua] = useState(8);
-    const [view, setView] = useState("rutina");
+  const [puntos, setPuntos] = useState(0);
+  const [vasosAgua, setVasosAgua] = useState(8);
+  const [view, setView] = useState("rutina");
+  const audioRef = useRef(new Audio(lvlSound)); // Referencia al audio
+  const [nivelAnterior, setNivelAnterior] = useState(1); // Nivel previo del personaje
 
-    // Solo llamar a onPointsIncrease cuando `puntos` cambie
-    useEffect(() => {
-        onPointsIncrease(puntos);
-    }, [puntos, onPointsIncrease]);
+  useEffect(() => {  audioRef.current.volume = 0.1;
+    onPointsIncrease(puntos);
 
-    const sumarPuntos = (puntosHábito) => {
-        setPuntos(prevPuntos => prevPuntos + puntosHábito);
-    };
+    // Detectar el cambio de nivel directamente después de actualizar puntos
+    const nuevoNivel = calcularNivel(puntos);
+    if (nuevoNivel > nivelAnterior) {
+      reproducirSonido();
+      setNivelAnterior(nuevoNivel);
+    }
+  }, [puntos]);
 
-    const resetearNivelPersonaje = () => {
-        setPuntos(0);
-    };
+  const calcularNivel = (puntos) => {
+    if (puntos >= 70) return 3;
+    if (puntos >= 30) return 2;
+    return 1;
+  };
 
-    const disminuirVasosAgua = () => {
-        setVasosAgua(prevVasos => (prevVasos > 0 ? prevVasos - 1 : 0));
-    };
+  const sumarPuntos = (puntosHábito) => {
+    setPuntos((prevPuntos) => prevPuntos + puntosHábito);
+  };
 
-    const resetearVasosAgua = () => {
-        setVasosAgua(8);
-    };
+  const resetearNivelPersonaje = () => {
+    setPuntos(0);
+    setNivelAnterior(1); // Reinicia el nivel previo
+  };
 
-    const obtenerPersonajeActual = () => {
-        if (puntos >= 70) return PersonajeNivel3;
-        if (puntos >= 30) return PersonajeNivel2;
-        return PersonajeNivel1;
-    };
+  const disminuirVasosAgua = () => {
+    setVasosAgua((prevVasos) => (prevVasos > 0 ? prevVasos - 1 : 0));
+  };
 
-    return (
-        <div className="app-container">
-            <h1 className="app-title">RPG de Vida</h1>
-            <div className="main-container">
-                <div className="left-column">
-                    <div className="header-buttons">
-                        <button className="nav-button" onClick={() => setView("rutina")}>Rutina</button>
-                        <button className="nav-button" onClick={() => setView("objetivos")}>Objetivos</button>
-                        <button className="nav-button" onClick={() => setView("calendario")}>Calendario</button>
-                        <button className="nav-button" onClick={() => setView("bloques")}>Bloques de Trabajo</button>
-                    </div>
+  const resetearVasosAgua = () => {
+    setVasosAgua(8);
+  };
 
-                    {view === "rutina" && (
-                        <>
-                            <div className="section">
-                                <h2>Rutina de la Mañana</h2>
-                                <div className="activity">
-                                    <span>Despertarse a la hora indicada</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(10)}>+10 Puntos</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-10)}>-10 Puntos</button>
-                                </div>
-                                <div className="activity">
-                                    <span>Ir a correr</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(10)}>+10 Puntos</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-5)}>-5 Puntos</button>
-                                </div>
-                                <div className="activity">
-                                    <span>Bañarse con agua fría</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(5)}>+5 Puntos</button>
-                                </div>
-                            </div>
+  const obtenerPersonajeActual = () => {
+    if (puntos >= 70) return PersonajeNivel3;
+    if (puntos >= 30) return PersonajeNivel2;
+    return PersonajeNivel1;
+  };
 
-                            <div className="section">
-                                <h2>Bloques de Trabajo (Mañana)</h2>
-                                {[...Array(4)].map((_, i) => (
-                                    <React.Fragment key={i}>
-                                        <div className="activity">
-                                            <span>Bloque {i + 1}</span>
-                                            <button className="add-button" onClick={() => sumarPuntos(5)}>+5 Puntos</button>
-                                            <button className="subtract-button" onClick={() => sumarPuntos(-5)}>-5 Puntos</button>
-                                        </div>
-                                        <div className="activity">
-                                            <span>Ejercicio</span>
-                                            <button className="add-button" onClick={() => sumarPuntos(5)}>+5 Puntos</button>
-                                            <button className="subtract-button" onClick={() => sumarPuntos(-1)}>-1 Punto</button>
-                                        </div>
-                                    </React.Fragment>
-                                ))}
-                            </div>
+  const reproducirSonido = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Reinicia el audio
+      audioRef.current.play().catch((error) => {
+        console.error("Error al reproducir el sonido:", error);
+      });
+    }
+  };
 
-                            <div className="section">
-                                <h2>Trabajo Media Tarde</h2>
-                                <div className="activity">
-                                    <span>Bloque 5</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(5)}>+5 Puntos</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-1)}>-1 Punto</button>
-                                </div>
-                                <div className="activity">
-                                    <span>Ejercicio</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(5)}>+5 Puntos</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-1)}>-1 Punto</button>
-                                </div>
-                            </div>
+  return (
+    <div className="app-container">
+      <h1 className="app-title">RPG de Vida</h1>
+      <div className="main-container">
+        <div className="left-column">
+          <div className="header-buttons">
+            <button className="nav-button" onClick={() => setView("rutina")}>
+              Rutina
+            </button>
+            <button className="nav-button" onClick={() => setView("objetivos")}>
+              Objetivos
+            </button>
+            <button
+              className="nav-button"
+              onClick={() => setView("calendario")}
+            >
+              Calendario
+            </button>
+            <button className="nav-button" onClick={() => setView("bloques")}>
+              Bloques de Trabajo
+            </button>
+            <button className="nav-button" onClick={() => setView("proyectos")}>
+              Proyectos
+            </button>
+          </div>
 
-                            <div className="section">
-                                <h2>Dieta y Alimentación</h2>
-                                <div className="activity">
-                                    <span>Almuerzo</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(1)}>+1 Punto</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-1)}>-1 Punto</button>
-                                </div>
-                                <div className="activity">
-                                    <span>Cena</span>
-                                    <button className="add-button" onClick={() => sumarPuntos(1)}>+1 Punto</button>
-                                    <button className="subtract-button" onClick={() => sumarPuntos(-1)}>-1 Punto</button>
-                                </div>
-                            </div>
-                        </>
-                    )}
-
-                    {view === "objetivos" && (
-                        <Objetivos /> // Asegúrate de que el componente Objetivos esté correctamente importado
-                    )}
-
-                    {view === "calendario" && (
-                        <Calendario /> // Muestra el componente solo en la pestaña de calendario
-                    )}
-                     {view === "bloques" && <BloquesDeTrabajo />}
+          {view === "rutina" && (
+            <>
+              <div className="section">
+                <h2>Rutina de la Mañana</h2>
+                <div className="activity">
+                  <span>Despertarse a la hora indicada</span>
+                  <button
+                    className="add-button"
+                    onClick={() => sumarPuntos(10)}
+                  >
+                    +10 Puntos
+                  </button>
+                  <button
+                    className="subtract-button"
+                    onClick={() => sumarPuntos(-10)}
+                  >
+                    -10 Puntos
+                  </button>
                 </div>
-
-                <div className="right-column">
-                    <img src={obtenerPersonajeActual()} alt="Personaje" className="personaje-image" />
-                    <div className="counter">Nivel: {puntos}</div>
-                    <button className="reset-nivel-button" onClick={resetearNivelPersonaje}>
-                        Reiniciar Nivel
-                    </button>
+                <div className="activity">
+                  <span>Ir a correr</span>
+                  <button
+                    className="add-button"
+                    onClick={() => sumarPuntos(10)}
+                  >
+                    +10 Puntos
+                  </button>
+                  <button
+                    className="subtract-button"
+                    onClick={() => sumarPuntos(-5)}
+                  >
+                    -5 Puntos
+                  </button>
                 </div>
-            </div>
+                <div className="activity">
+                  <span>Bañarse con agua fría</span>
+                  <button
+                    className="add-button"
+                    onClick={() => sumarPuntos(5)}
+                  >
+                    +5 Puntos
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
+          {view === "objetivos" && <Objetivos />}
+          {view === "proyectos" && <Proyectos />}
+          {view === "calendario" && <Calendario />}
+          {view === "bloques" && <BloquesDeTrabajo />}
         </div>
-    );
+
+        <div className="right-column">
+          <img
+            src={obtenerPersonajeActual()}
+            alt="Personaje"
+            className="personaje-image"
+          />
+          <div className="counter">Nivel: {puntos}</div>
+          <button
+            className="reset-nivel-button"
+            onClick={resetearNivelPersonaje}
+          >
+            Reiniciar Nivel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Contador;

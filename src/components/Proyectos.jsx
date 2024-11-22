@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import './BloquesDeTrabajo.css';
+import './Proyectos.css';
 
-function BloquesDeTrabajo() {
-    const [bloques, setBloques] = useState(() => {
-        const bloquesGuardados = localStorage.getItem('bloquesDeTrabajo');
-        return bloquesGuardados
-            ? JSON.parse(bloquesGuardados)
+function Proyectos() {
+    const [proyectos, setProyectos] = useState(() => {
+        const proyectosGuardados = localStorage.getItem('proyectos');
+        return proyectosGuardados
+            ? JSON.parse(proyectosGuardados)
             : Array(8).fill({ titulo: "", descripcion: "", estado: "original" });
     });
 
     const [modalData, setModalData] = useState(null);
 
-    // Guardar los bloques en localStorage cada vez que cambian
+    // Guardar los proyectos en localStorage cada vez que cambian
     useEffect(() => {
-        localStorage.setItem('bloquesDeTrabajo', JSON.stringify(bloques));
-    }, [bloques]);
+        localStorage.setItem('proyectos', JSON.stringify(proyectos));
+    }, [proyectos]);
 
     const abrirModal = (index) => {
-        setModalData({ ...bloques[index], index });
+        setModalData({ ...proyectos[index], index });
     };
 
     const cerrarModal = () => {
@@ -25,11 +25,11 @@ function BloquesDeTrabajo() {
     };
 
     const guardarDatos = () => {
-        setBloques((prev) =>
-            prev.map((bloque, i) =>
+        setProyectos((prev) =>
+            prev.map((proyecto, i) =>
                 i === modalData.index
                     ? { titulo: modalData.titulo, descripcion: modalData.descripcion, estado: modalData.estado }
-                    : bloque
+                    : proyecto
             )
         );
         cerrarModal();
@@ -40,17 +40,17 @@ function BloquesDeTrabajo() {
     };
 
     return (
-        <div className="bloques-container">
-            <h2>Bloques de Trabajo</h2>
-            <div className="bloques-grid">
-                {bloques.map((bloque, index) => (
+        <div className="proyectos-container">
+            <h2>Proyectos</h2>
+            <div className="proyectos-grid">
+                {proyectos.map((proyecto, index) => (
                     <div
                         key={index}
-                        className={`bloque ${bloque.estado}`}
+                        className={`proyecto ${proyecto.estado}`}
                         onClick={() => abrirModal(index)}
                     >
-                        <h3>{bloque.titulo || `Bloque ${index + 1}`}</h3>
-                        <p>{bloque.descripcion || "Sin descripción"}</p>
+                        <h3>{proyecto.titulo || `Proyecto ${index + 1}`}</h3>
+                        <p>{proyecto.descripcion || "Sin descripción"}</p>
                     </div>
                 ))}
             </div>
@@ -58,7 +58,7 @@ function BloquesDeTrabajo() {
             {modalData && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h3>Editar Bloque</h3>
+                        <h3>Editar Proyecto</h3>
                         <input
                             type="text"
                             placeholder="Título"
@@ -114,4 +114,4 @@ function BloquesDeTrabajo() {
     );
 }
 
-export default BloquesDeTrabajo;
+export default Proyectos;
