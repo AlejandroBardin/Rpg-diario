@@ -1,0 +1,65 @@
+.bloques-container {
+    padding: 20px;
+}
+
+.bloques-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.bloque {
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.bloque:hover {
+    transform: scale(1.05);
+    background-color: #e8f5e9;
+}
+
+.bloque.completado {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.bloque.fallido {
+    background-color: #333;
+    color: white;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.estado-options label {
+    margin-right: 10px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+}

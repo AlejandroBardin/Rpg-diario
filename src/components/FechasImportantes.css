@@ -1,0 +1,95 @@
+/* src/components/FechasImportantes.css */
+
+.fechas-importantes-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.fechas-importantes-container h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.fechas-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.fechas-form input[type="date"],
+.fechas-form input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-button,
+.save-button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.fechas-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.fecha-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.fecha-item:hover {
+    background-color: #e8f5e9;
+}
+
+.fecha-texto {
+    font-weight: bold;
+    color: #333;
+}
+
+.descripcion-texto {
+    color: #666;
+    margin-top: 5px;
+}
+
+.fecha-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button {
+    background-color: #ffca28;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #e53935;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}

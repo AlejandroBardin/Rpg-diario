@@ -1,0 +1,23 @@
+/* src/components/VideoCard.css */
+.video-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.video-card.completed {
+    background-color: #e0ffe0; /* Verde claro cuando se completa */
+}
+
+.thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.video-info {
+    margin-top: 8px;
+}

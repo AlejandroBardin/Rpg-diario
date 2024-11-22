@@ -1,0 +1,168 @@
+/* src/components/Calendario.css */
+
+.calendario-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.calendario-titulo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.calendario-header {
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #71a0e2;
+    padding: 10px 0;
+    border-radius: 4px;
+}
+
+.calendario-dia {
+    padding: 15px 0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+}
+
+.calendario-dia.empty {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+
+/* src/components/Calendario.css */
+
+.calendario-dia {
+    padding: 15px 0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+.calendario-dia:hover {
+    transform: scale(1.1); /* Aumenta el tamaño en un 10% */
+    background-color: #d4e6fb; /* Cambia a un color más claro */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15); /* Aumenta la sombra */
+}
+
+/* src/components/Calendario.css */
+
+.objetivos-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    width: 300px;
+    text-align: left;
+}
+
+.objetivos-card h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.objetivos-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.objetivos-card li {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.objetivos-card input[type="text"] {
+    border: none;
+    background: transparent;
+    font-size: 1em;
+    flex: 1;
+    margin-left: 10px;
+}
+
+.objetivo-completado input[type="text"],
+.input-completado {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.objetivos-card button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.objetivos-card button:hover {
+    background-color: #45a049;
+}
+
+.agregar-objetivo-form input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.agregar-objetivo-form button {
+    margin-left: 10px;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* src/components/Calendario.css */
+
+.calendario-dia {
+    padding: 15px 0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.calendario-dia:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+}
+
+.calendario-dia.completado {
+    background-color: #4CAF50; /* Color verde para días completados */
+    color: #ffffff;
+}
+
+
