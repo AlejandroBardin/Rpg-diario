@@ -10,6 +10,7 @@ function BloquesDeTrabajo() {
     });
 
     const [modalData, setModalData] = useState(null);
+    const [isAdding, setIsAdding] = useState(false); // Nueva variable para determinar si se está agregando
 
     // Guardar los bloques en localStorage cada vez que cambian
     useEffect(() => {
@@ -18,21 +19,37 @@ function BloquesDeTrabajo() {
 
     const abrirModal = (index) => {
         setModalData({ ...bloques[index], index });
+        setIsAdding(false); // No está agregando
     };
 
     const cerrarModal = () => {
         setModalData(null);
+        setIsAdding(false);
     };
 
     const guardarDatos = () => {
-        setBloques((prev) =>
-            prev.map((bloque, i) =>
-                i === modalData.index
-                    ? { titulo: modalData.titulo, descripcion: modalData.descripcion, estado: modalData.estado }
-                    : bloque
-            )
-        );
+        if (isAdding) {
+            // Agregar nueva card
+            setBloques((prev) => [
+                ...prev,
+                { titulo: modalData.titulo, descripcion: modalData.descripcion, estado: modalData.estado || "original" },
+            ]);
+        } else {
+            // Editar card existente
+            setBloques((prev) =>
+                prev.map((bloque, i) =>
+                    i === modalData.index
+                        ? { titulo: modalData.titulo, descripcion: modalData.descripcion, estado: modalData.estado }
+                        : bloque
+                )
+            );
+        }
         cerrarModal();
+    };
+
+    const agregarNuevaCard = () => {
+        setModalData({ titulo: "", descripcion: "", estado: "original" });
+        setIsAdding(true); // Cambiar a estado de agregando
     };
 
     const actualizarEstado = (estado) => {
@@ -53,12 +70,15 @@ function BloquesDeTrabajo() {
                         <p>{bloque.descripcion || "Sin descripción"}</p>
                     </div>
                 ))}
+                <div className="bloque agregar-card" onClick={agregarNuevaCard}>
+                    <span>+</span>
+                </div>
             </div>
 
             {modalData && (
                 <div className="modal">
                     <div className="modal-content">
-                        <h3>Editar Bloque</h3>
+                        <h3>{isAdding ? "Agregar Bloque" : "Editar Bloque"}</h3>
                         <input
                             type="text"
                             placeholder="Título"
@@ -74,35 +94,37 @@ function BloquesDeTrabajo() {
                                 setModalData((prev) => ({ ...prev, descripcion: e.target.value }))
                             }
                         />
-                        <div className="estado-options">
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="estado"
-                                    checked={modalData.estado === "completado"}
-                                    onChange={() => actualizarEstado("completado")}
-                                />
-                                Cumplido
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="estado"
-                                    checked={modalData.estado === "en-curso"}
-                                    onChange={() => actualizarEstado("en-curso")}
-                                />
-                                En Curso
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="estado"
-                                    checked={modalData.estado === "fallido"}
-                                    onChange={() => actualizarEstado("fallido")}
-                                />
-                                Fallido
-                            </label>
-                        </div>
+                        {!isAdding && (
+                            <div className="estado-options">
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="estado"
+                                        checked={modalData.estado === "completado"}
+                                        onChange={() => actualizarEstado("completado")}
+                                    />
+                                    Cumplido
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="estado"
+                                        checked={modalData.estado === "en-curso"}
+                                        onChange={() => actualizarEstado("en-curso")}
+                                    />
+                                    En Curso
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="estado"
+                                        checked={modalData.estado === "fallido"}
+                                        onChange={() => actualizarEstado("fallido")}
+                                    />
+                                    Fallido
+                                </label>
+                            </div>
+                        )}
                         <div className="modal-buttons">
                             <button onClick={guardarDatos}>Guardar</button>
                             <button onClick={cerrarModal}>Cerrar</button>
