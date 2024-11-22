@@ -1,14 +1,14 @@
 // src/components/Contador.jsx
 import React, { useState, useEffect, useRef } from "react";
 import "./Contador.css";
-import Calendario from "./Calendario";
-import Objetivos from "./Objetivos";
-import BloquesDeTrabajo from "./BloquesDeTrabajo";
-import Proyectos from "./Proyectos";
-import PersonajeNivel1 from "../assets/personaje-nivel1.png";
-import PersonajeNivel2 from "../assets/personaje-nivel2.png";
-import PersonajeNivel3 from "../assets/personaje-nivel3.png";
-import lvlSound from "../assets/lvl.mp3";
+import Calendario from "../Calendario/Calendario";
+import Objetivos from "../Objetivos/Objetivos";
+import BloquesDeTrabajo from "../BloquesDeTrabajo/BloquesDeTrabajo";
+import Proyectos from "../Proyectos/Proyectos";
+import PersonajeNivel1 from "../../assets/personaje-nivel1.png";
+import PersonajeNivel2 from "../../assets/personaje-nivel2.png";
+import PersonajeNivel3 from "../../assets/personaje-nivel3.png";
+import lvlSound from "../../assets/lvl.mp3";
 
 function Contador({ onPointsIncrease }) {
   const [puntos, setPuntos] = useState(0);

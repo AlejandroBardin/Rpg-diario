@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Contador from './components/Contador';
+import Contador from './components/Contador/Contador';
 
 function App() {
     const [puntos, setPuntos] = useState(0);

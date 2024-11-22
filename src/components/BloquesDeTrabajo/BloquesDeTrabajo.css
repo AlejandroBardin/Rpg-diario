@@ -4,11 +4,10 @@
 
 .bloques-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Cambiado para mayor similitud */
     gap: 20px;
 }
 
-/* src/components/BloquesDeTrabajo.css */
 .bloque {
     padding: 20px;
     border-radius: 8px;
@@ -22,27 +21,23 @@
     transform: scale(1.05);
 }
 
-/* Estado por defecto */
 .bloque.original {
     background-color: #f9f9f9;
     color: #333;
 }
 
-/* Estado cumplido */
 .bloque.completado {
     background-color: #4caf50;
     color: white;
 }
 
-/* Estado fallido */
-.bloque.fallido {
-    background-color: #000;
+.bloque.en-curso {
+    background-color: #c480f7;
     color: white;
 }
 
-/* Estado en curso */
-.bloque.en-curso {
-    background-color: #c480f7;
+.bloque.fallido {
+    background-color: #000;
     color: white;
 }
 
@@ -58,11 +53,12 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .modal-content {
     background-color: #ffffff;
-    padding: 30px;
+    padding: 20px;
     border-radius: 12px;
     width: 90%;
     max-width: 500px;
@@ -91,6 +87,7 @@
     margin-bottom: 15px;
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
     transition: border-color 0.3s;
+    box-sizing: border-box;
 }
 
 .modal-content input[type="text"]:focus,
@@ -101,12 +98,12 @@
 
 .modal-content textarea {
     resize: none;
-    height: 100px;
+    height: 80px;
 }
 
 .estado-options {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 10px;
     margin-bottom: 20px;
 }
@@ -123,6 +120,7 @@
     font-size: 0.9em;
     font-weight: bold;
     color: #555;
+    white-space: nowrap;
 }
 
 .estado-options input {

@@ -1,6 +1,6 @@
 // src/components/Objetivos.jsx
 import React from 'react';
-import FechasImportantes from './FechasImportantes';
+import FechasImportantes from '../FechasImportantes/FechasImportantes';
 import './Objetivos.css';
 
 function Objetivos() {
